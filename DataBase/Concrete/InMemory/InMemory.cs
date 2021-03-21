@@ -28,7 +28,7 @@ namespace DataBase.Concrete.InMemory
 
         public void Delete(Car entity)
         {
-            Car deleteCar = _car.SingleOrDefault(p => p.Id == entity.Id);
+            Car deleteCar = _car.SingleOrDefault(p => p.CarId == entity.CarId);
             _car.Remove(deleteCar);
         }
 
@@ -41,14 +41,14 @@ namespace DataBase.Concrete.InMemory
 
         public List<Car> GetById(int id)
         {
-            return _car.Where(p => p.Id == id).ToList();
+            return _car.Where(p => p.CarId == id).ToList();
         }
 
         public void Update(Car entity)
         {
-            Car updateCar = _car.SingleOrDefault(p => p.Id == entity.Id);
-            updateCar.Id = entity.Id;
-            updateCar.ClorId = entity.ClorId;
+            Car updateCar = _car.SingleOrDefault(p => p.CarId == entity.CarId);
+            updateCar.CarId = entity.CarId;
+            updateCar.ColorId = entity.ColorId;
             updateCar.BrandId = entity.BrandId;
             updateCar.DailyPrice = entity.DailyPrice;
             updateCar.Description = entity.Description;

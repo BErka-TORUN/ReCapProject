@@ -1,6 +1,10 @@
 ﻿using Business.Abstract;
+using Business.Constants;
+using Core.Utilities;
 using DataBase.Abstract;
+using DataBase.Concrete.EntittyFaremwork;
 using Entities.Concrete;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -19,19 +23,36 @@ namespace Business.Concrete
             _brandDal = brandDal;
         }
 
-        public List<Brand> GetCarsByBrandId(int id)
+        public IDataResult<Car> Add(Car car)
         {
-            return _brandDal.GetAll(p => p.BrandId == id);
+            if (car.CarName.Length <2)
+            {
+                return new ErrorDataResult<Car>(Messages.DontAdded);
+            }
+            using (CarDataBaseContext context =new CarDataBaseContext() )
+            {
+                var addCar = context.Entry(car);
+                addCar.State = EntityState.Added;
+                context.SaveChanges();
+            }
+            return new SuccessDataResult<Car>(Messages.Added);
         }
 
-        public List<Color> GetCarsByColorId(int id)
+        public IDataResult<List<Brand>> GetCarsByBrandId(int id)
         {
-            return _colorDal.GetAll(p => p.ColorId == id);
+            return new SuccessDataResult<List<Brand>>(_brandDal.GetAll(p => p.BrandId == id), Messages.BrandId);
         }
 
-        public List<Car> GetCarsDailyPrice()
+        public IDataResult<List<Color>> GetCarsByColorId(int id)
         {
-            return _carDal.GetAll(p => p.DailyPrice > 0);
+            return new SuccessDataResult<List<Color>>( _colorDal.GetAll(p => p.ColorId == id),Messages.ColorId);
         }
+
+        public IDataResult< List<Car>> GetCarsDailyPrice()
+        {
+            return new SuccessDataResult<List<Car>>(_carDal.GetAll(p => p.DailyPrice > 0));
+        }
+
+       
     }
 }

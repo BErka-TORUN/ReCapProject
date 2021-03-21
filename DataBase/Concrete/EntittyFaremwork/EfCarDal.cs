@@ -14,8 +14,8 @@ namespace DataBase.Concrete.EntittyFaremwork
         {
             using (CarDataBaseContext context=new CarDataBaseContext())
             {
-                var result = from c in context.Car
-                             join r in context.Color
+                var result = from c in context.Cars
+                             join r in context.Colors
                              on c.ColorId equals r.ColorId
                              select new CarDataBase
                              {
