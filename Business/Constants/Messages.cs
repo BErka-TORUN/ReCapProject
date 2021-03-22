@@ -11,5 +11,7 @@ namespace Business.Constants
         public static string DontAdded = "Lütfen 2 harften fazla oluşan bir isim giriniz!!!";
         public static string Added = "Kaydedildi.";
         public static string GetAll = "Tüm liste getirildi.";
+        public static string RentalNull = "Araç teslim edilmedi.";
+        public static string RentalAdd = "Yeni kayıt açıldı,kiralama başaralı.";
     }
 }
